@@ -12,7 +12,10 @@ import React, {
   View
 } from 'react-native';
 
-import Game from './Game';
+import Main from './Main'
+
+
+/*import Game from './Game';
 
 class FlappyBirds extends Component {
   render() {
@@ -20,6 +23,7 @@ class FlappyBirds extends Component {
       <Game />
     );
   }
-}
+}*/
 
-AppRegistry.registerComponent('FlappyBirds', () => FlappyBirds);
+
+AppRegistry.registerComponent('FlappyBirds', () => Main);
