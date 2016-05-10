@@ -14,10 +14,14 @@ import {vw, vh, vmin, vmax} from './../services/viewport';
 export default class PipeUp extends Component{
 
 	constructor(){
+	
+
 		super();
 	}
 
 	componentDidMount(){
+
+	
 
 	}
 
@@ -25,6 +29,7 @@ export default class PipeUp extends Component{
 
 	}
 	render(){
+		
 		return(
 			<View  style={{ position : 'absolute', left : this.props.x , top : this.props.y  }}  >
 				<Image resizeMode="stretch"  source ={ require('./../images/pipe-down.png')}

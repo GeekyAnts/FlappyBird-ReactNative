@@ -73,10 +73,23 @@ export default class Bird extends Component {
     const height = 10*vmin;
 
     return (
-
-      <View  style={{ position : 'absolute', left : this.props.x , top : this.props.y  }}  >
-        <Image resizeMode="stretch"  source ={ require('./../images/bird1.png')}
-           style ={{ width : this.props.width * vmin, height : this.props.height  *vmax }}   />
+      <View style={{
+        position: 'absolute',
+        left: this.props.x ,
+        top: this.props.y ,
+        width: width,
+        height: height,
+        overflow: 'hidden',
+        transform: [{rotate: this.props.rotation+'deg'}],
+      }}>
+        <View style={ {marginTop: -this.state.margin*vmin} }>
+          <Image source={ require('./../images/bird1.png') } 
+          style={ { width: 10*vmin, height: 10*vmin} } />
+          <Image source={ require('./../images/bird2.png') }
+           style={ { width: 10*vmin, height: 10*vmin} } />
+          <Image source={ require('./../images/bird3.png') } 
+           style={ { width: 10*vmin, height: 10*vmin} } />
+        </View>
       </View>
     );
   }

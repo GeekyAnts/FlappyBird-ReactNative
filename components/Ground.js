@@ -1,4 +1,3 @@
-
 import React, {
   Component,
   Text,
@@ -11,7 +10,7 @@ import React, {
 import {vw, vh, vmin, vmax} from './../services/viewport';
 
 
-export default class PipeDown extends Component{
+export default class Ground extends Component{
 
 	constructor(){
 		super();
@@ -27,8 +26,8 @@ export default class PipeDown extends Component{
 
 	render(){
 		return(
-			<View  style={{ position : 'absolute', left : this.props.x , top : this.props.y   }}  >
-				<Image  resizeMode="stretch" source ={ require('./../images/pipe-up.png')  } 
+			<View  style={{  position : 'absolute', left : this.props.x , top : this.props.y * vmax  }}  >
+				<Image  resizeMode="stretch" source ={ require('./../images/flappybird-bg-brow.png')  } 
 				 style ={{ width : this.props.width * vmin, height : this.props.height  *vmax }}   />
 			</View>
 		);

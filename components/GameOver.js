@@ -27,10 +27,9 @@ export default class GameOver extends Component{
 
 	render(){
 		return(
-			<View >
-				<Text >
-			          Game Over 
-			    </Text>
+			<View style={{ position : 'absolute', left : 25 * vmin, top : 30 * vmax  }}  >
+				<Image resizeMode="stretch"  source ={ require('./../images/flappybird_gameover.png')}
+				    />
 			</View>
 		);
 	}

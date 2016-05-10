@@ -21,6 +21,9 @@ import PipeDown from "./components/PipeDown";
 import GameOver from "./components/GameOver";
 import Score from "./components/Score";
 import Invisible from "./components/Invisible";
+import Ground from "./components/Ground";
+import Start from "./components/Start"
+import StartAgain from "./components/StartAgain"
 
 
 const styles = StyleSheet.create({
@@ -37,68 +40,103 @@ export default class Game extends Component {
   constructor() {
     super();
     this.gravity = 0.0001;
-    this.state = { animate: true};
+    this.state = { animate: true };
   }
 
   componentDidMount() {
-
-    console.log(vw, vh, vmin, vmax);
-    console.log( this.props.score ,  this.props.gameOver );
-    this.intervalId = setInterval( this.update.bind(this) , 1000/60); 
+   
+    
   }
 
-
-
   componentWillUpdate(nextProps, nextState) {
-      if(nextProps.gameOver){
-        clearInterval(this.intervalId)
-      }
-
-
-
+    if (nextProps.gameOver) {
+      clearInterval(this.intervalId)
+    }
   }
 
 
   update() {
-    var timeLapsed = 1000/60;
+    var timeLapsed = 1000 / 60;
     this.props.tick(timeLapsed);
+  }
+  
+  
+  startFlappyBird(){
+    
+    this.props.startGame();
+    this.intervalId = setInterval(this.update.bind(this), 1000 / 60);
+  }
+  
+  
+  startFlappyBirdAgain(){
+    
+    this.props.startGameAgain();
+    this.intervalId = setInterval(this.update.bind(this), 1000 / 60);
+    
   }
 
 
-  clickMeToBounce(){
-      this.props.bounce();
+  clickMeToBounce() {
+    this.props.bounce();
   }
 
   render() {
+    
+      
     return (
-      <TouchableOpacity activeOpacity={1} onPress={ this.clickMeToBounce.bind(this)}  style={ styles.image} >
-        <Image 
+      <TouchableOpacity activeOpacity={1} onPress={ this.clickMeToBounce.bind(this) }  style={ styles.image} >
+        <Image
           style={ styles.image }
+
+          source={ require('./images/bg.png') }>
+          <View  style={{ position: 'absolute', top: 0, left: 0 }}>
           
-          source={ require('./images/bg.png') }> 
-            <View  style={{position: 'absolute', top: 0, left: 0}}>
+            { !this.props.start  ?  <Start onStart= { this.startFlappyBird.bind(this) } /> : <Text></Text> }
+            
+          
+               
+            
+           
+           
+            { this.props.gameOver ? <GameOver /> : <Text></Text> }
+            <PipeUp x ={this.props.pipeUp.position.x * vmin}   y ={this.props.pipeUp.position.y}
+              height = {this.props.pipeUp.dimension.height}
+              width = { this.props.pipeUp.dimension.width } />
+
+            <PipeUp x ={this.props.pipeUpO.position.x * vmin}   y ={this.props.pipeUpO.position.y}
+              height = {this.props.pipeUpO.dimension.height}
+              width = { this.props.pipeUpO.dimension.width } />
 
 
-                 <Score  score = { this.props.score}  />
+            <Ground x ={this.props.ground.position.x * vmin}   y ={this.props.ground.position.y}
+              height = {this.props.ground.dimension.height}
+              width = { this.props.ground.dimension.width } />
 
-                 { this.props.gameOver ?  <GameOver />  : <Text>Good</Text> }
-                 
-                 <PipeUp x ={this.props.pipeUp.position.x * vmin}   y ={this.props.pipeUp.position.y}  
-                          height = {this.props.pipeUp.dimension.height} 
-                          width = { this.props.pipeUp.dimension.width } />
-                 <Invisible x ={this.props.invisible.position.x * vmin}   y ={this.props.invisible.position.y}  
-                          height = {this.props.invisible.dimension.height} 
-                          width = { this.props.invisible.dimension.width } />
-                 <PipeDown x ={this.props.pipeDown.position.x * vmin}   y ={this.props.pipeDown.position.y * vmax}  
-                          height = {this.props.pipeDown.dimension.height} 
-                          width = { this.props.pipeDown.dimension.width }   />
-                 <Bird  x={ this.props.bird.position.x *vw} y={  this.props.bird.position.y *vh} rotation={30} animate={this.state.animate} 
-                          height = {this.props.bird.dimension.height} 
-                          width = { this.props.bird.dimension.width }   />
-            </View> 
+
+            <Invisible x ={this.props.invisible.position.x * vmin}   y ={this.props.invisible.position.y}
+              height = {this.props.invisible.dimension.height}
+              width = { this.props.invisible.dimension.width } />
+            <Invisible x ={this.props.invisibleO.position.x * vmin}   y ={this.props.invisibleO.position.y}
+              height = {this.props.invisibleO.dimension.height}
+              width = { this.props.invisibleO.dimension.width } />
+            <PipeDown x ={this.props.pipeDown.position.x * vmin}   y ={this.props.pipeDown.position.y * vmax}
+              height = {this.props.pipeDown.dimension.height}
+              width = { this.props.pipeDown.dimension.width }   />
+            <PipeDown x ={this.props.pipeDownO.position.x * vmin}   y ={this.props.pipeDownO.position.y * vmax}
+              height = {this.props.pipeDownO.dimension.height}
+              width = { this.props.pipeDownO.dimension.width }   />
+            <Bird  x={ this.props.bird.position.x * vw} y={  this.props.bird.position.y * vh} rotation={30} animate={this.state.animate}
+              height = {this.props.bird.dimension.height}
+              width = { this.props.bird.dimension.width }   />
+
+              <Score score = { this.props.score }  />
+
+              {  (this.props.gameOver && this.props.start) ?  
+             <StartAgain onStartAgain = { this.startFlappyBirdAgain.bind(this)} /> : <Text></Text> }
+          </View>
         </Image>
       </TouchableOpacity>
-     
+
     );
 
 

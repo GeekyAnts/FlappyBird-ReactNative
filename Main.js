@@ -3,9 +3,14 @@ import { Provider } from 'react-redux';
 
 import GameContainer from './containers/GameContainer'
 
-import {vw, vh, vmin, vmax} from './services/viewport';
+import {vw, vh, vmin, vmax , heightOfPipeUp , 
+       heightOfPipeDown ,  heightOfGround , heightOfInvisibleArea ,
+       positionOfPipeDown     } from './services/viewport';
 
 import configureStore from './store/configureStore'
+
+
+console.log(heightOfInvisibleArea , positionOfPipeDown);
 
 const initialState = {
     game: {
@@ -14,8 +19,8 @@ const initialState = {
             {
                 name: 'bird',
                 position: {
-                    x: 50,
-                    y: 50
+                    x: 46,
+                    y: 55
                 },
                 velocity: {
                     x: 0,
@@ -26,12 +31,13 @@ const initialState = {
                     height: 8
                 },
                 rigid: true,
-                static: false
+                static: false,
+                invisible : false
             },
             {
                 name: 'PipeUp',
                 position: {
-                    x: 100,
+                    x: 110,
                     y: 0
                 },
                 velocity: {
@@ -39,50 +45,125 @@ const initialState = {
                     y: 0
                 },
                 dimension: {
-                    width: 10,
-                    height: 40
+                    width: 15,
+                    height: heightOfPipeUp
                 },
                 rigid: true,
-                static: false
+                static: true,
+                invisible : false
             },
             {
                 name: 'PipeDown',
                 position: {
-                    x: 100,
-                    y: 100
+                    x: 110,
+                    y: positionOfPipeDown
                 },
                 velocity: {
                     x: -0.9,
                     y: 0
                 },
                 dimension: {
-                    width: 10,
-                    height: 40
+                    width: 15,
+                    height: heightOfPipeDown
                 },
                 rigid: true,
-                static: false
+                static: true,
+                invisible : false
             },
             {
                 name: 'Invisible',
                 position: {
                     x: 110,
-                    y: 40
+                    y: heightOfPipeUp
                 },
                 velocity: {
                     x: -0.9,
                     y: 0
                 },
                 dimension: {
-                    width: 0,
-                    height: 26
+                    width: 15,
+                    height: heightOfInvisibleArea
                 },
                 rigid: true,
-                static: false
+                static: true,
+                invisible : true
+            },
+            {
+                name: 'PipeUp',
+                position: {
+                    x: 150,
+                    y: 0
+                },
+                velocity: {
+                    x: -0.9,
+                    y: 0
+                },
+                dimension: {
+                    width: 15,
+                    height: heightOfPipeUp
+                },
+                rigid: true,
+                static: true,
+                invisible : false
+            },
+            {
+                name: 'PipeDown',
+                position: {
+                    x: 150,
+                    y: positionOfPipeDown
+                },
+                velocity: {
+                    x: -0.9,
+                    y: 0
+                },
+                dimension: {
+                    width: 15,
+                    height: heightOfPipeDown
+                },
+                rigid: true,
+                static: true,
+                invisible : false
+            },
+            {
+                name: 'Invisible',
+                position: {
+                    x: 150,
+                    y: heightOfPipeUp
+                },
+                velocity: {
+                    x: -0.9,
+                    y: 0
+                },
+                dimension: {
+                    width: 15,
+                    height: heightOfInvisibleArea
+                },
+                rigid: true,
+                static: true,
+                invisible : true
+            },
+            
+            {
+                name : "Ground",
+                position : {
+                    x : 0,
+                    y : 80
+                },
+                velocity : {
+                    x : -0.9,
+                    y : 0
+                },
+                dimension : {
+                    width :  100,
+                    height : heightOfGround
+                },
+                rigid : true 
             }
         ],
         score: 0,
         gameOver : false,
-        collidedArray : []
+        collidedArray : [],
+        start : false
     }
 }
 

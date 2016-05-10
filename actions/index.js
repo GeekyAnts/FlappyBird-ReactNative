@@ -10,3 +10,11 @@ export function bounce(){
 	return { type : types.BOUNCE }
 }
 
+
+export function start() {
+	return {  type : types.START }
+}
+
+export function startAgain(){
+	return { type : types.STARTAGAIN  }
+}
