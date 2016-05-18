@@ -9,9 +9,6 @@ import {vw, vh, vmin, vmax , heightOfPipeUp ,
 
 import configureStore from './store/configureStore'
 
-
-console.log(heightOfInvisibleArea , positionOfPipeDown);
-
 const initialState = {
     game: {
         gravity: 0.0001,
@@ -150,14 +147,34 @@ const initialState = {
                     y : 80
                 },
                 velocity : {
-                    x : -0.9,
+                    x : -1,
                     y : 0
                 },
                 dimension : {
                     width :  100,
                     height : heightOfGround
                 },
-                rigid : true 
+                rigid : false,
+                static: true,
+                invisible : true 
+            },
+             {
+                name : "Ground",
+                position : {
+                    x : 100,
+                    y : 80
+                },
+                velocity : {
+                    x :  -1,
+                    y : 0
+                },
+                dimension : {
+                    width :  100,
+                    height : heightOfGround
+                },
+                rigid : false,
+                static: true,
+                invisible : true 
             }
         ],
         score: 0,

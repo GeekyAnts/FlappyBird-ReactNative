@@ -1,4 +1,3 @@
-
 import React, {
 	Component,
 	Text,
@@ -24,9 +23,7 @@ export default class Score extends Component {
 
 	componentWillUnMount() {
 	}
-	
-	
- 	 getImageSourceLink(num){
+	getImageSourceLink(num) {
 
 		switch (num) {
 			case "0":
@@ -52,26 +49,26 @@ export default class Score extends Component {
 			default:
 				return require("./../images/flappybird_00.png");
 		}
-		
-		
+
+
 	}
 
 
 	render() {
 		var scoreString = this.props.score.toString();
-		
+
 		var scoreArray = [];
-		
+
 		for (var index = 0; index < scoreString.length; index++) {
 			scoreArray.push(scoreString[index]);
 		}
-		
+
 		return (
-			<View style={{ position: 'absolute', left: 47 * vmin, top: 20 * vmax, flexDirection : 'row'}}  >
-				{ scoreArray.map( function (item) {
+			<View style={{ position: 'absolute', left: 47 * vmin, top: 20 * vmax, flexDirection: 'row' }}  >
+				{ scoreArray.map(function (item) {
 					return <Image resizeMode="stretch"  source ={ this.getImageSourceLink(item) }/>
-				    }.bind(this))  }
-					
+				}.bind(this)) }
+
 			</View>
 		);
 	}

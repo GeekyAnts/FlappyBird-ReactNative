@@ -82,7 +82,7 @@ export default class Bird extends Component {
         overflow: 'hidden',
         transform: [{rotate: this.props.rotation+'deg'}],
       }}>
-        <View style={ {marginTop: -this.state.margin*vmin} }>
+        <View style={ { marginTop: -this.state.margin*vmin} }>
           <Image source={ require('./../images/bird1.png') } 
           style={ { width: 10*vmin, height: 10*vmin} } />
           <Image source={ require('./../images/bird2.png') }

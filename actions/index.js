@@ -18,3 +18,8 @@ export function start() {
 export function startAgain(){
 	return { type : types.STARTAGAIN  }
 }
+
+export function	runGroundAlways(){
+	return { type : types.RUNGROUNDALWAYS }
+}
+
