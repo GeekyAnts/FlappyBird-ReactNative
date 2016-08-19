@@ -1,6 +1,6 @@
 import { TICK , BOUNCE , START ,STARTAGAIN, RUNGROUNDALWAYS  } from '../constants'
 
-import {vw, vh, vmin, vmax , heightOfPipeUp , 
+import {vw, vh, vmin, vmax , heightOfPipeUp ,
        heightOfPipeDown ,  heightOfGround , heightOfInvisibleArea ,
        positionOfPipeDown     }  from '../services/viewport';
 
@@ -10,7 +10,7 @@ function getUpdatedVelocity( newPosition , bird, timeLapsed , gravity){
  	if(newPosition.y > 100) {
       updateVelocity = -(updateVelocity);
     }
- 	return {  x :  bird.velocity.x, y : updateVelocity } 
+ 	return {  x :  bird.velocity.x, y : updateVelocity }
  }
 
 
@@ -36,9 +36,9 @@ function getUpdatedVelocity( newPosition , bird, timeLapsed , gravity){
  	}
 
  	var distanceCovered = pipe.velocity.x;
-    
+
  	if(pipe.position.x > 0 - pipe.dimension.width){
- 		return { x : pipe.position.x + distanceCovered, y : pipe.position.y }	
+ 		return { x : pipe.position.x + distanceCovered, y : pipe.position.y }
  	}
  	else{
  		return { x : 100 , y : getYPosition(pipe.name) }
@@ -50,7 +50,7 @@ function getUpdatedVelocity( newPosition , bird, timeLapsed , gravity){
  	var distanceCovered = ground.velocity.x;
 
  	if(ground.position.x > - 97)  {
- 		return { x : ground.position.x + distanceCovered, y : 80 }	
+ 		return { x : ground.position.x + distanceCovered, y : 80 }
  	}
  	else{
  		return { x : 100 , y : 80 }
@@ -63,7 +63,7 @@ function getUpdatedVelocity( newPosition , bird, timeLapsed , gravity){
  function updateGroundPosition(gameObjects){
 
  	var arr = [];
-	gameObjects.map( item => {   
+	gameObjects.map( item => {
 		if(item.static == true && item.rigid == false){
 			var newGroundPosition = getUpdatedGroundPosition(item);
 			var newGround = Object.assign({} ,item , { position : newGroundPosition} )
@@ -81,15 +81,12 @@ function getUpdatedVelocity( newPosition , bird, timeLapsed , gravity){
 
 
 function update(gameObjects, dt =  1000/60, gravity = 0.0001){
-    
-    
-    console.log("Inside Reducer" , dt);
 	var arr = [];
-	gameObjects.map( item => {   
+	gameObjects.map( item => {
 		if(item.static == false){
 			var newPosition =  getUpdatedY(item,dt,gravity);
-			var updatedVelocity = getUpdatedVelocity( newPosition,item,dt,gravity);			
-			var newBird =  Object.assign( {} , item , 
+			var updatedVelocity = getUpdatedVelocity( newPosition,item,dt,gravity);
+			var newBird =  Object.assign( {} , item ,
 				{ position : newPosition , velocity : updatedVelocity }  ) ;
 			arr.push(newBird);
 		}
@@ -97,7 +94,7 @@ function update(gameObjects, dt =  1000/60, gravity = 0.0001){
 		else if(item.static == true && item.rigid == true){
 			var newPositionOfPipe = getUpdateDistanceForPipe(item,dt);
 			var updatedVelocity = getUpdatedVelocityForPipe(item);
-			var newPipe  = 	Object.assign( {} , item , 
+			var newPipe  = 	Object.assign( {} , item ,
 				{ position : newPositionOfPipe , velocity : updatedVelocity }  ) ;
 			arr.push(newPipe);
 		}
@@ -137,8 +134,8 @@ function   detectCollition(bird , visibleObject){
     var visibleObjectXPosition = visibleObject.position.x * vmin;
     var visibleObjectYPosition = visibleObject.position.y * vmax;
     var visibleObjectWidth = visibleObject.dimension.width * vmin;
-    var visibleObjectHeight =   visibleObject.dimension.height * vmax 
-    				
+    var visibleObjectHeight =   visibleObject.dimension.height * vmax
+
 
     if (birdXPostion < visibleObjectXPosition + visibleObjectWidth &&
          birdXPostion + birdWidth > visibleObjectXPosition &&
@@ -146,7 +143,7 @@ function   detectCollition(bird , visibleObject){
          birdHeight + birdYPostion > visibleObjectYPosition) {
          return true;
         }
-		
+
 }
 
 function checkForCollition(gameObjects){
@@ -191,7 +188,7 @@ function checkForScoreUp(gameObjects,score,collidedArray){
 	var invisible = gameObjects[3];
 	var invisibleO = gameObjects[6];
 
-	
+
 
 	var birdXPostion = bird.position.x * vmin;
     var birdYPostion = bird.position.y * vmax;
@@ -199,12 +196,12 @@ function checkForScoreUp(gameObjects,score,collidedArray){
     var birdHeight = bird.dimension.height * vmax;
 
     var invisibleXPosition = invisible.position.x * vmin;
-    var invisibleYPosition = invisible.position.y * vmax; 
+    var invisibleYPosition = invisible.position.y * vmax;
     var invisibleWidth = invisible.dimension.width * vmin;
     var invisibleHeight = invisible.dimension.height * vmax;
 
     var invisibleOXPosition = invisibleO.position.x * vmin;
-    var invisibleOYPosition = invisible.position.y * vmax; 
+    var invisibleOYPosition = invisible.position.y * vmax;
     var invisibleOWidth = invisibleO.dimension.width * vmin;
     var invisibleOHeight = invisibleO.dimension.height * vmax;
 
@@ -213,10 +210,10 @@ function checkForScoreUp(gameObjects,score,collidedArray){
      if (birdXPostion < invisibleXPosition + invisibleWidth &&
          birdXPostion + birdWidth > invisibleXPosition &&
          birdYPostion< invisibleYPosition+ invisibleHeight &&
-         birdHeight + birdYPostion > invisibleYPosition) 
+         birdHeight + birdYPostion > invisibleYPosition)
  		 {
      		if(collidedArray.length  == 0){
-     			score++;	
+     			score++;
      		}
 		 	return {score : score, collidedArray :  [invisible.name]};
 
@@ -224,17 +221,17 @@ function checkForScoreUp(gameObjects,score,collidedArray){
   	  if (birdXPostion < invisibleOXPosition + invisibleOWidth &&
 	     birdXPostion + birdWidth > invisibleOXPosition &&
 	     birdYPostion< invisibleOYPosition+ invisibleOHeight &&
-	     birdHeight + birdYPostion > invisibleOYPosition) 
+	     birdHeight + birdYPostion > invisibleOYPosition)
 		 {
 	 		if(collidedArray.length  == 0){
-	 			score++;	
+	 			score++;
 	 		}
 		 	return {score : score, collidedArray :  [invisible.name]};
 
    	     }
         else{
-			return {score : score, collidedArray : []};        	
-        }   
+			return {score : score, collidedArray : []};
+        }
 }
 
 
@@ -368,7 +365,7 @@ const startAgainState = {
                 static: true,
                 invisible : true
             },
-            
+
             {
                 name : "Ground",
                 position : {
@@ -385,7 +382,7 @@ const startAgainState = {
                 },
                 rigid : false,
                 static: true,
-                invisible : true 
+                invisible : true
             },
 
              {
@@ -404,7 +401,7 @@ const startAgainState = {
                 },
                 rigid : false,
                 static: true,
-                invisible : true 
+                invisible : true
             }
         ],
         score: 0,

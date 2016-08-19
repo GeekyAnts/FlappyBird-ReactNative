@@ -1,6 +1,6 @@
 import { connect } from 'react-redux'
 import { tick , bounce ,start , startAgain ,runGroundAlways } from  '../actions'
- 
+
 import Game from '../Game'
 
 const mapStateToProps = (state, ownProps) => {
@@ -19,7 +19,7 @@ const mapStateToProps = (state, ownProps) => {
 		start : state.game.start
 		//gameObjects : state.game.objects
 	}
-} 
+}
 
 const mapDispatchToProps = (dispatch) => {
 	return{
@@ -38,10 +38,8 @@ const mapDispatchToProps = (dispatch) => {
 		updateGround : () =>{
 			dispatch(runGroundAlways())
 		}
-	
-
 	}
-} 
+}
 
 const GameContainer = connect(mapStateToProps, mapDispatchToProps)(Game);
 

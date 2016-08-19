@@ -65,8 +65,8 @@ export default class Score extends Component {
 
 		return (
 			<View style={{ position: 'absolute', left: 47 * vmin, top: 20 * vmax, flexDirection: 'row' }}  >
-				{ scoreArray.map(function (item) {
-					return <Image resizeMode="stretch"  source ={ this.getImageSourceLink(item) }/>
+				{ scoreArray.map(function (item , index) {
+					return <Image key = {index} resizeMode="stretch"  source ={ this.getImageSourceLink(item) }/>
 				}.bind(this)) }
 
 			</View>

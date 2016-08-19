@@ -13,6 +13,7 @@ import React, {
   Image
 } from 'react-native';
 
+
 import {vw, vh, vmin, vmax} from './services/viewport';
 
 import Bird from "./components/Bird";
@@ -25,9 +26,10 @@ import Ground from "./components/Ground";
 import Start from "./components/Start"
 import StartAgain from "./components/StartAgain"
 
-
+var requestAnimation = requestAnimationFrame;
 
 var time  = new Date() ;
+var myReqAnimationId;
 const styles = StyleSheet.create({
   image: {
     flex: 1,
@@ -40,14 +42,17 @@ export default class Game extends Component {
 
   constructor() {
     super();
-    this.gravity = 0.0001;
     this.state = { rotation: 0 };
   }
 
-  componentDidMount() {
-    //this.updateGroundInterval = setInterval(this.updateGround.bind(this), 1000 / 60);
-    
+  shouldComponentUpdate(nextProps, nextState) {
+    if(nextState.gameOver){
+      return false;
+    }
+    return true;
   }
+
+
 
   componentWillUpdate(nextProps, nextState) {
 
@@ -58,9 +63,9 @@ export default class Game extends Component {
       this.setState({  rotation : -30  })
     }
 
-
     if (nextProps.gameOver) {
-      clearInterval(this.intervalId)
+      this.setState({gameOver : true})
+      cancelAnimationFrame(myReqAnimationId);
     }
   }
 
@@ -72,39 +77,35 @@ export default class Game extends Component {
   update() {
     var timediff = new Date() - time;
     time = new Date();
-    //console.log("Inside Update", timediff );
-    var timeLapsed = 1000 / 60;
     this.props.tick(timediff);
-    requestAnimationFrame(this.update.bind(this))
+    myReqAnimationId =  requestAnimation(this.update.bind(this))
   }
-  
-  
-  startFlappyBird(){
-    
-    this.props.startGame();
-    //clearInterval(this.updateGroundInterval)
 
-    //requestAnimationFrame(this.update.bind(this))
-    this.intervalId =  setInterval(this.update.bind(this), 1000 / 60);
+
+  startFlappyBird(){
+    this.props.startGame();
+    time = new Date();
+    this.setState({gameOver : false})
+    myReqAnimationId = requestAnimation(this.update.bind(this))
+
   }
-  
-  
+
+
   startFlappyBirdAgain(){
-    
     this.props.startGameAgain();
-    this.intervalId = setInterval(this.update.bind(this), 1000 / 60);
-    
+    time = new Date();
+    this.setState({gameOver : false})
+    myReqAnimationId = requestAnimation(this.update.bind(this))
   }
 
 
   clickMeToBounce() {
-    
     this.props.bounce();
   }
 
   render() {
-    
-      
+
+
     return (
       <TouchableOpacity activeOpacity={1} onPress={ this.clickMeToBounce.bind(this) }  style={ styles.image} >
         <Image
@@ -112,10 +113,10 @@ export default class Game extends Component {
 
           source={ require('./images/bg.png') }>
           <View  style={{ position: 'absolute', top: 0, left: 0 }}>
-          
+
             { !this.props.start  ?  <Start onStart= { this.startFlappyBird.bind(this) } /> : <Text></Text> }
-            
-           
+
+
             { this.props.gameOver ? <GameOver /> : <Text></Text> }
 
 
@@ -135,13 +136,6 @@ export default class Game extends Component {
               height = {this.props.groundO.dimension.height}
               width = { this.props.groundO.dimension.width } />
 
-            <Invisible x ={this.props.invisible.position.x * vmin}   y ={this.props.invisible.position.y}
-              height = {this.props.invisible.dimension.height}
-              width = { this.props.invisible.dimension.width } />
-            <Invisible x ={this.props.invisibleO.position.x * vmin}   y ={this.props.invisibleO.position.y}
-              height = {this.props.invisibleO.dimension.height}
-              width = { this.props.invisibleO.dimension.width } />
-
             <PipeDown x ={this.props.pipeDown.position.x * vmin}   y ={this.props.pipeDown.position.y * vmax}
               height = {this.props.pipeDown.dimension.height}
               width = { this.props.pipeDown.dimension.width }   />
@@ -155,7 +149,7 @@ export default class Game extends Component {
 
               <Score score = { this.props.score }  />
 
-              {  (this.props.gameOver && this.props.start) ?  
+              {  (this.props.gameOver && this.props.start) ?
              <StartAgain onStartAgain = { this.startFlappyBirdAgain.bind(this)} /> : <Text></Text> }
           </View>
         </Image>
@@ -166,4 +160,3 @@ export default class Game extends Component {
 
   }
 }
-
